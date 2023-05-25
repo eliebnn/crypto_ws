@@ -64,14 +64,16 @@ class CoreWS(WebsocketClient):
         """
         self._redis_timer = Timer(limit=caching_freq)
         self._heart_timer = Timer(limit=50*3, wait=0)
-        self._redis = redis.Redis(**(redis_kwargs if redis_kwargs else {}))
+
+        self._do_cache = kwargs.get('do_cache', False)
+        self._do_publish = kwargs.get('do_publish', False)
         self._caching_key = kwargs.get('caching_key', self.CACHING_KEY)
+        self._redis = None
+        self._init_redis(redis_kwargs)
 
         self.markets = obj_to_list(markets)
         self.channels = obj_to_list(channels)
 
-        self._do_cache = kwargs.get('do_cache', False)
-        self._do_publish = kwargs.get('do_publish', False)
         self._publish_channel = kwargs.get('publish_channel', self.PUBLISH_CHANNEL)
 
         self.results = kwargs.get('results', {c: {} for c in self.channels})
@@ -79,6 +81,12 @@ class CoreWS(WebsocketClient):
         self.verbose = kwargs.get('verbose', 0)
 
         super().__init__(url=url)
+
+    def _init_redis(self, redis_kwargs):
+
+        if self._do_cache or self._do_publish:
+            kw = redis_kwargs if redis_kwargs else {}
+            self._redis = redis.Redis(**kw)
 
     def _heart_beat(self):
         """
