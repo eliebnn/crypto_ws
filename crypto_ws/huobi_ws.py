@@ -128,8 +128,11 @@ class TickerParser:
     def parse(msg, subset=None):
         subset = subset if subset else [k[0] for k in TickerParser.map.values()]
 
-        dct = {TickerParser.map.get(k, k)[0]: TickerParser.map.get(k, k)[1](v)
-               for k, v in msg['tick'].items() if TickerParser.map.get(k, k)[0] in subset}
+        # dct = {TickerParser.map.get(k, k)[0]: TickerParser.map.get(k, k)[1](v)
+        #        for k, v in msg['tick'].items() if TickerParser.map.get(k, k)[0] in subset}
+
+        dct = {key_value_pair[0]: key_value_pair[1](v) for k, v in msg['tick'].items()
+               if (key_value_pair := TickerParser.map.get(k, k))[0] in subset}
 
         dct['respond_time_utc'] = Parser.parse_datetime(msg['ts'])
 
@@ -152,8 +155,11 @@ class BarParser:
     def parse(msg, subset=None):
         subset = subset if subset else [k[0] for k in BarParser.map.values()]
 
-        dct = {BarParser.map.get(k, k)[0]: BarParser.map.get(k, k)[1](v)
-               for k, v in msg['tick'].items() if BarParser.map.get(k, k)[0] in subset}
+        # dct = {BarParser.map.get(k, k)[0]: BarParser.map.get(k, k)[1](v)
+        #        for k, v in msg['tick'].items() if BarParser.map.get(k, k)[0] in subset}
+
+        dct = {key_value_pair[0]: key_value_pair[1](v) for k, v in msg['tick'].items()
+               if (key_value_pair := BarParser.map.get(k, k))[0] in subset}
 
         dct['respond_time_utc'] = Parser.parse_datetime(msg['ts'])
 
@@ -172,8 +178,11 @@ class DepthParser:
     def parse(msg, subset=None):
         subset = subset if subset else [k[0] for k in DepthParser.map.values()]
 
-        dct = {DepthParser.map.get(k, k)[0]: DepthParser.map.get(k, k)[1](v)
-               for k, v in msg['tick'].items() if DepthParser.map.get(k, k)[0] in subset}
+        # dct = {DepthParser.map.get(k, k)[0]: DepthParser.map.get(k, k)[1](v)
+        #        for k, v in msg['tick'].items() if DepthParser.map.get(k, k)[0] in subset}
+
+        dct = {key_value_pair[0]: key_value_pair[1](v) for k, v in msg['tick'].items()
+               if (key_value_pair := DepthParser.map.get(k, k))[0] in subset}
 
         dct['respond_time_utc'] = Parser.parse_datetime(msg['ts'])
 
@@ -192,8 +201,11 @@ class ByPriceParser:
     def parse(msg, subset=None):
         subset = subset if subset else [k[0] for k in ByPriceParser.map.values()]
 
-        dct = {ByPriceParser.map.get(k, k)[0]: ByPriceParser.map.get(k, k)[1](v)
-               for k, v in msg['tick'].items() if ByPriceParser.map.get(k, k)[0] in subset}
+        # dct = {ByPriceParser.map.get(k, k)[0]: ByPriceParser.map.get(k, k)[1](v)
+        #        for k, v in msg['tick'].items() if ByPriceParser.map.get(k, k)[0] in subset}
+
+        dct = {key_value_pair[0]: key_value_pair[1](v) for k, v in msg['tick'].items()
+               if (key_value_pair := ByPriceParser.map.get(k, k))[0] in subset}
 
         dct['respond_time_utc'] = Parser.parse_datetime(msg['ts'])
 
@@ -216,8 +228,11 @@ class BBOParser:
     def parse(msg, subset=None):
         subset = subset if subset else [k[0] for k in BBOParser.map.values()]
 
-        dct = {BBOParser.map.get(k, k)[0]: BBOParser.map.get(k, k)[1](v)
-               for k, v in msg['tick'].items() if BBOParser.map.get(k, k)[0] in subset}
+        # dct = {BBOParser.map.get(k, k)[0]: BBOParser.map.get(k, k)[1](v)
+        #        for k, v in msg['tick'].items() if BBOParser.map.get(k, k)[0] in subset}
+
+        dct = {key_value_pair[0]: key_value_pair[1](v) for k, v in msg['tick'].items()
+               if (key_value_pair := BBOParser.map.get(k, k))[0] in subset}
 
         dct['respond_time_utc'] = Parser.parse_datetime(msg['ts'])
 
@@ -242,8 +257,12 @@ class TradeParser:
         ls = []
         for d in msg['tick']['data']:
 
-            dct = {TradeParser.map.get(k, k)[0]: TradeParser.map.get(k, k)[1](v)
-                   for k, v in d.items() if TradeParser.map.get(k, k)[0] in subset}
+            # dct = {TradeParser.map.get(k, k)[0]: TradeParser.map.get(k, k)[1](v)
+            #        for k, v in d.items() if TradeParser.map.get(k, k)[0] in subset}
+
+            dct = {key_value_pair[0]: key_value_pair[1](v) for k, v in msg['tick'].items()
+                   if (key_value_pair := TradeParser.map.get(k, k))[0] in subset}
+
             ls.append(dct)
 
         dct = {'respond_time_utc': Parser.parse_datetime(msg['ts']), 'trade': ls,
@@ -270,8 +289,8 @@ class DetailParser:
     def parse(msg, subset=None):
         subset = subset if subset else [k[0] for k in DetailParser.map.values()]
 
-        dct = {DetailParser.map.get(k, k)[0]: DetailParser.map.get(k, k)[1](v)
-               for k, v in msg['tick'].items() if DetailParser.map.get(k, k)[0] in subset}
+        dct = {key_value_pair[0]: key_value_pair[1](v) for k, v in msg['tick'].items()
+               if (key_value_pair := DetailParser.map.get(k, k))[0] in subset}
 
         dct['respond_time_utc'] = Parser.parse_datetime(msg['ts'])
 
@@ -280,11 +299,11 @@ class DetailParser:
 
 if __name__ == "__main__":
 
-    # cls = HuobiWS(verbose=10, markets=['ethbtc'], channels=['ticker'], redis_key='foo')
+    cls = HuobiWS(verbose=10, markets=['ethbtc'], channels=['ticker'], redis_key='foo')
     # cls = HuobiWS(verbose=10, markets=['btcusdt'], channels=['trade.detail'], redis_key='foo'
     # cls = HuobiWS(verbose=10, markets=['btcusdt'], channels=['detail'], redis_key='foo')
     # cls = HuobiWS(verbose=10, markets=['ethbtc'], channels=['depth.step1'], redis_key='foo')
-    cls = HuobiWS(verbose=10, markets=['ethbtc'], channels=['kline.1min'], redis_key='foo')
+    # cls = HuobiWS(verbose=10, markets=['ethbtc'], channels=['kline.1min'], redis_key='foo')
     # cls = HuobiWS(verbose=10, markets=['btcusdt'], channels=['bbo'], redis_key='foo')
     # cls = HuobiWS(verbose=10, markets=['ethbtc'], channels=['mbp.refresh.5'], redis_key='foo')
 

@@ -95,10 +95,8 @@ class TradeParser:
         subset = subset if subset else ['event_type', 'event_time_utc', 'symbol', 'price', 'quantity', 'side',
                                         'trade_id']
 
-        dct = {TradeParser.map.get(k, k)[0]: TradeParser.map.get(k, k)[1](v)
-               for k, v in msg.items() if TradeParser.map.get(k, k)[0] in subset}
-
-        return dct
+        return {key_value_pair[0]: key_value_pair[1](v) for k, v in msg.items()
+                if (key_value_pair := TradeParser.map.get(k, k))[0] in subset}
 
 
 class TickerParser:
@@ -142,10 +140,8 @@ class TickerParser:
                                         'price_change_pct', 'traded_volume_asset', 'bid', 'ask', 'bid_quantity',
                                         'ask_quantity', 'symbol']
 
-        dct = {TickerParser.map.get(k, k)[0]: TickerParser.map.get(k, k)[1](v)
-               for k, v in msg.items() if TickerParser.map.get(k, k)[0] in subset}
-
-        return dct
+        return {key_value_pair[0]: key_value_pair[1](v) for k, v in msg.items()
+                if (key_value_pair := TickerParser.map.get(k, k))[0] in subset}
 
 
 class IndexParser:
@@ -163,10 +159,8 @@ class IndexParser:
         subset = subset if subset else ['event_type', 'event_time_utc', 'symbol', 'price', 'quantity', 'side',
                                         'trade_id']
 
-        dct = {IndexParser.map.get(k, k)[0]: IndexParser.map.get(k, k)[1](v)
-               for k, v in msg.items() if IndexParser.map.get(k, k)[0] in subset}
-
-        return dct
+        return {key_value_pair[0]: key_value_pair[1](v) for k, v in msg.items()
+                if (key_value_pair := IndexParser.map.get(k, k))[0] in subset}
 
 
 class BarParser:
@@ -201,8 +195,8 @@ class BarParser:
         msg.update(msg['k'])
         msg.pop('k')
 
-        dct = {BarParser.map.get(k, k)[0]: BarParser.map.get(k, k)[1](v)
-               for k, v in msg.items() if BarParser.map.get(k, k)[0] in subset}
+        dct = {key_value_pair[0]: key_value_pair[1](v) for k, v in msg.items()
+               if (key_value_pair := BarParser.map.get(k, k))[0] in subset}
 
         if dct['current_candle_completed']:
             return dct
@@ -212,12 +206,8 @@ class BarParser:
 
 if __name__ == "__main__":
 
-    redis_kw = dict(host='192.168.1.100', password='pi.')
+    redis_kw = dict(host='localhost', password=None)
 
-    cls = BinanceWS(verbose=10, caching_key='redis_cache_key', publish_channel='redis_pub_channel',
-                    markets=['btcusdt', 'ethusdt'],
-                    channels=['ticker'],
-                    # channels=['kline_1m', 'kline_5m'],
-                    caching_freq=10,
-                    do_cache=True, do_publish=False, redis_kwargs=redis_kw)
+    cls = BinanceWS(verbose=10, markets=['btcusdt'], channels=['trade'])
+
     cls.run()

@@ -3,6 +3,7 @@ import redis
 from crypto_ws.client_ws import WebsocketClient
 from crypto_ws.utils import Timer, obj_to_list
 
+
 class CoreWS(WebsocketClient):
     """
     A class used to represent a WebSocket client specifically for cryptocurrencies.
