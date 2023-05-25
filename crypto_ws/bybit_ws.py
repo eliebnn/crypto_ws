@@ -1,5 +1,7 @@
 import datetime as dt
 
+import numpy as np
+
 from crypto_ws.core_ws import CoreWS
 
 
@@ -73,6 +75,13 @@ class Parser:
     def parse_datetime(x):
         return dt.datetime.utcfromtimestamp(int(str(x)[:-3])).strftime('%Y-%m-%d %H:%M:%S.%MS')
 
+    @staticmethod
+    def string2float(x):
+        if x == '':
+            return np.nan
+        else:
+            return float(x)
+
 
 class TickerParser:
 
@@ -85,7 +94,7 @@ class TickerParser:
         'volume24h': ['volume_24h', float],
         'turnover24h': ['turnover_24h', float],
         'price24hPcnt': ['price_pct_24h', float],
-        'usdIndexPrice': ['usd_index_price', float],
+        'usdIndexPrice': ['usd_index_price', Parser.string2float],
     }
 
     @staticmethod
@@ -181,9 +190,9 @@ class TradeParser:
 
 if __name__ == "__main__":
 
-    # cls = BybitWS(verbose=10, markets=['ETHUSDT'], channels=['tickers'], redis_key='foo')
+    cls = BybitWS(verbose=10, markets=['ETHUSDT'], channels=['tickers'], redis_key='foo')
     # cls = BybitWS(verbose=10, markets=['ETHUSDT'], channels=['publicTrade'], redis_key='foo')
     # cls = BybitWS(verbose=10, markets=['ETHUSDT'], channels=['orderbook.1'], redis_key='foo')
-    cls = BybitWS(verbose=10, markets=['ETHUSDT'], channels=['kline.15'], redis_key='foo')
+    # cls = BybitWS(verbose=10, markets=['ETHUSDT'], channels=['kline.15'], redis_key='foo')
 
     cls.run()
