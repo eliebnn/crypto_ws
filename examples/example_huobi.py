@@ -5,7 +5,7 @@ import json
 
 def get_cached_data():
     r = redis.Redis(host='localhost', password=None)
-    foo = r.get(name='redis_cache_key:ticker').decode()
+    foo = r.get(name='redis_cache_key:bbo').decode()
 
     return json.loads(foo)
 
