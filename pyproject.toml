@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crypto_ws"
+description = "Crypto Websocket Clients"
+keywords = ["crypto", "websocket"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+
+]
+dependencies = [
+    "websocket-client==1.5.1",
+    "redis==4.5.5",
+]
+dynamic = ["version"]
+
+[tool.setuptools]
+
+[tool.setuptools_scm]
+write_to = "_version.py"
