@@ -47,7 +47,9 @@ class CoreWS(WebsocketClient):
 
     def _cache(self):
         if self._redis_timer.reached_limit and self._do_cache:
-            print(self.results) if self.verbose > 6 else None
+            if self.verbose > 6:
+                print('Now Caching:')
+                print(self.results)
 
             for channel, result in self.results.items():
                 self._redis.set(name=f'{self._caching_key}:{channel}', value=json.dumps(result), ex=60*60)
