@@ -135,7 +135,7 @@ class CoreWS(WebsocketClient):
         ----------
         channel : str
             the channel to publish the message to
-        msg : str
+        msg : dict
             the message to publish
         """
         if self._do_publish:

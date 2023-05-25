@@ -25,19 +25,6 @@ class HuobiWS(CoreWS):
     def _heart_beat(self, msg):
         self._send({'pong': msg['ping']}) if 'ping' in msg.keys() else None
 
-    @staticmethod
-    def fmt_ticker(msg):
-        ts = int(str(msg['ts'])[:len(str(msg['ts']))-3])
-
-        dct = {
-            'price': msg['tick']['close'],
-            'bid': msg['tick']['bid'],
-            'ask': msg['tick']['ask'],
-            'time_utc': dt.datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S.%MS')
-        }
-
-        return dct
-
     # ----
 
     def _subscribe(self):
