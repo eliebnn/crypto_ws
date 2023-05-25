@@ -185,11 +185,5 @@ if __name__ == "__main__":
     # cls = BybitWS(verbose=10, markets=['ETHUSDT'], channels=['publicTrade'], redis_key='foo')
     # cls = BybitWS(verbose=10, markets=['ETHUSDT'], channels=['orderbook.1'], redis_key='foo')
     cls = BybitWS(verbose=10, markets=['ETHUSDT'], channels=['kline.15'], redis_key='foo')
-    # cls = HuobiWS(verbose=10, markets=['btcusdt'], channels=['trade.detail'], redis_key='foo'
-    # cls = HuobiWS(verbose=10, markets=['btcusdt'], channels=['detail'], redis_key='foo')
-    # cls = HuobiWS(verbose=10, markets=['ethbtc'], channels=['depth.step1'], redis_key='foo')
-    # cls = HuobiWS(verbose=10, markets=['ethbtc'], channels=['kline.1min'], redis_key='foo')
-    # cls = HuobiWS(verbose=10, markets=['btcusdt'], channels=['bbo'], redis_key='foo')
-    # cls = HuobiWS(verbose=10, markets=['ethbtc'], channels=['mbp.refresh.5'], redis_key='foo')
 
     cls.run()
