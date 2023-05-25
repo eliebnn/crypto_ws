@@ -10,6 +10,11 @@ class HuobiWS(CoreWS):
     CACHING_KEY = 'default_redis_caching_key:huobi'
     PUBLISH_CHANNEL = 'default_redis_publish_key:huobi'
 
+    CHANNELS = ['ticker', 'bbo', 'trade.detail', 'detail',
+                'depth.step0', 'depth.step1', 'depth.step2', 'depth.step3', 'depth.step4', 'depth.step5',
+                'mbp.refresh.5', 'mbp.refresh.10', 'mbp.refresh.20',
+                'kline.1min', 'kline.5min', 'kline.15min', 'kline.30min']
+
     def __init__(self, url='wss://api.huobi.pro/ws', markets=('btcusdt', 'ethusdt'), channels=('ticker',),
                  caching_freq=0.25, translate=None, redis_kwargs=None, **kwargs):
 
