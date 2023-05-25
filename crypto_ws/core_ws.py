@@ -23,7 +23,7 @@ class CoreWS(WebsocketClient):
         self.markets = obj_to_list(markets)
         self.channels = obj_to_list(channels)
 
-        self._do_cache = kwargs.get('do_cache', True)
+        self._do_cache = kwargs.get('do_cache', False)
         self._do_publish = kwargs.get('do_publish', False)
         self._publish_channel = kwargs.get('publish_channel', self.PUBLISH_CHANNEL)
 
