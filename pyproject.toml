@@ -5,7 +5,8 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "crypto_ws"
 description = "Crypto Websocket Clients"
-keywords = ["crypto", "websocket"]
+readme = "README.md"
+keywords = ["crypto", "ws"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
@@ -16,6 +17,7 @@ dependencies = [
     "redis==4.5.5",
     "numpy==1.24.3",
 ]
+
 dynamic = ["version"]
 
 [tool.setuptools]
