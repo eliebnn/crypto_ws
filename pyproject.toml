@@ -1,18 +1,26 @@
-[tool.poetry]
-name = "crypto_ws"
-version = "0.1.0"
-description = "My package description"
-authors = ["me"]
-
-[tool.poetry.dependencies]
-websocket-client = "^1.5.1"
-redis="^4.5.5"
-numpy="^1.24.3"
-
-
-[tool.poetry.dev-dependencies]
-pytest = "^5.2"
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crypto_ws"
+description = "Crypto Websocket Clients"
+readme = "README.md"
+keywords = ["crypto", "ws"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+
+]
+dependencies = [
+    "websocket-client==1.5.1",
+    "redis==4.5.5",
+    "numpy==1.24.3",
+]
+
+dynamic = ["version"]
+
+[tool.setuptools]
+
+[tool.setuptools_scm]
+write_to = "_version.py"
