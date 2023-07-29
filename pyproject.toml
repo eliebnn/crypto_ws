@@ -5,9 +5,9 @@ description = "My package description"
 authors = ["me"]
 
 [tool.poetry.dependencies]
-websocket-client==1.5.1
-redis==4.5.5
-numpy==1.24.3
+websocket-client = "^1.5.1"
+redis="^4.5.5"
+numpy="^1.24.3"
 
 
 [tool.poetry.dev-dependencies]
